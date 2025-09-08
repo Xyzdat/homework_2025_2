@@ -11,8 +11,7 @@
  * @return {Object} Объект с результатами анализа
  */
 const emailAnalyzer = text => { 
-    const email_regs =  /[a-zA-Z0-9._%+-]+(?:\.[a-zA-Z0-9._%+-]+)*@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(?:\.[a-zA-Z]{2,})?(?:\.[a-zA-Z]{2,})?/g;
-    // const emailRegex = /[a-zA-Z0-9.
+    const email_regs =  /[a-zA-Z0-9._%+-]+(?:\.[a-zA-Z0-9._%+-]+)*@[a-zA-Z0-9-]+\.[a-zA-Z0-9]{2,}(?:\.[a-zA-Z0-9]{2,})?(?:\.[a-zA-Z0-9]{2,})?|[a-zA-Z0-9._%+-]+@\[(?:\d{1,3}\.){3}\d{1,3}\]/g;
 
     const emails = text.match(email_regs) ?? [];
     
@@ -28,7 +27,6 @@ const emailAnalyzer = text => {
         else{
              emails_count[lowercaseEmail] += 1;
         }
-        // emails_count[lowercaseEmail] = (emails_count[lowercaseEmail] || 0)+ 1;
     });
 
     let mostfrequentEmails = '';
@@ -43,12 +41,6 @@ const emailAnalyzer = text => {
 
     }
 
-    // for (const[email, count] of Object.entries(emails_count)){
-    //     if (count > max){
-    //         max = count;
-    //         mostfrequentEmails = email;
-    //     }
-    // }
 
     const uniqueEmails = Array.from(new Set(lowercaseEmails));
 

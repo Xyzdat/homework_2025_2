@@ -80,6 +80,18 @@ QUnit.module("Тестируем функцию emailAnalyzer", function() {
     });
 
 
+     QUnit.test("Работает правильно с доменами в которых цифры", function(assert) {
+        const input = "домены высокого уровня: john..doe@1123.org, john..doe@1123.org, postmaster@[123.123.123.123]";
+        const result = emailAnalyzer(input);
+
+        assert.deepEqual(result, {
+            emailCount: 3,
+            uniqueEmails: ["john..doe@1123.org", "postmaster@[123.123.123.123]"],
+            mostFrequentEmail: "john..doe@1123.org"
+        });
+    });
+
+
     
 });
 

@@ -11,7 +11,8 @@
  * @return {Object} Объект с результатами анализа
  */
 const emailAnalyzer = text => { 
-    const email_regs =  /[a-zA-Z0-9_%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/g;
+    const email_regs =  /[a-zA-Z0-9._%+-]+(?:\.[a-zA-Z0-9._%+-]+)*@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(?:\.[a-zA-Z]{2,})?(?:\.[a-zA-Z]{2,})?/g;
+    // const emailRegex = /[a-zA-Z0-9.
 
     const emails = text.match(email_regs) ?? [];
     
@@ -21,18 +22,33 @@ const emailAnalyzer = text => {
     emails.forEach(email => {
         const lowercaseEmail = email.toLowerCase();
         lowercaseEmails.push(lowercaseEmail);
-        emails_count[lowercaseEmail] = (emails_count[lowercaseEmail] || 0)+ 1;
+        if (!(lowercaseEmail in emails_count)){
+            emails_count[lowercaseEmail] = 1;
+        }
+        else{
+             emails_count[lowercaseEmail] += 1;
+        }
+        // emails_count[lowercaseEmail] = (emails_count[lowercaseEmail] || 0)+ 1;
     });
 
     let mostfrequentEmails = '';
     let max = 0;
 
-    for (const[email, count] of Object.entries(emails_count)){
+    for (const email in emails_count){
+        const count = emails_count[email] ;
         if (count > max){
             max = count;
             mostfrequentEmails = email;
         }
+
     }
+
+    // for (const[email, count] of Object.entries(emails_count)){
+    //     if (count > max){
+    //         max = count;
+    //         mostfrequentEmails = email;
+    //     }
+    // }
 
     const uniqueEmails = Array.from(new Set(lowercaseEmails));
 

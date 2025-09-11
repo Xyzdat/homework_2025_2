@@ -94,5 +94,3 @@ QUnit.module("Тестируем функцию emailAnalyzer", function() {
 
     
 });
-
-
